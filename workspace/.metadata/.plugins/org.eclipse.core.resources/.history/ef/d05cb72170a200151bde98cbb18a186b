@@ -1,0 +1,71 @@
+public class Point {
+	Double x,y,z;
+	boolean D;
+	Point() {
+		x=0.0;
+		y=0.0;
+	}
+	Point(double x,double y) {
+		this.x=x;
+		this.y=y;
+	}
+	//Rotating Point P regarding another point Q
+	Point rotatePoint(Point P,Double angle,Point Q ) {
+		Line L= new Line(P, Q);
+		Double resangle=L.theta()+angle;
+		if(resangle> Math.PI/2) {
+			resangle=Math.PI-resangle;
+		}
+		Double dis = distance(P, Q);
+		return new Point(Q.x+Math.cos(resangle)*dis,Q.y+Math.sin(resangle)*dis);
+	}
+	//distance between points
+	double distance(Point p1,Point p2) {
+		return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
+	}
+}
+
+class Line {
+	Double a,b,c;
+	Line(Point p1,Point p2) {
+	if(p1.x==p2.x) {
+		b=0.0;
+		a=1.0;
+		c=-p1.x;
+	}
+	else {
+		b=1.0;
+		a=-(p1.y-p2.y)/(p1.x-p2.x);
+		c=-a*p1.x-p1.y;
+		}
+	}
+	double theta(){
+		if(b==0.0)
+			return Math.PI/2;
+		else {
+			Double an= Math.atan(a);
+			if(an<0.0)
+				return an+Math.PI;
+			else 
+				return an;
+		}
+	}
+}
+class Circle {
+	Point c;
+	Double r;
+	Circle (Point c,Double r) {
+		this.c=c;
+		this.r=r;
+	}
+}
+
+//Mirror Image of Point on a line
+//Line Intersect
+//perpendicular line through P
+//parallel line through P
+//orientation of Points
+//Circle intersect(area)
+//Sphere intersection(volume)
+//circle line intersection
+

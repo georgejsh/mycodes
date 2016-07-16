@@ -1,0 +1,12 @@
+package euler;
+
+public class p43substdiv {
+	public static int[] findnext(int[] a){
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

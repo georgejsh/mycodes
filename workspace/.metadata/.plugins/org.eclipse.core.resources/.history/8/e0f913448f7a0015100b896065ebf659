@@ -1,0 +1,44 @@
+package euler;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class fact74 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Integer loopi,loopj,count;
+		Long val,sum=0L;
+		String temp;
+		HashMap<Long, Integer> test = new HashMap<>();
+		ArrayList<Long> data= new ArrayList<>();
+		data.add(1L);
+		for(loopi=1;loopi<10;loopi++) {
+			data.add(data.get(loopi-1)*loopi);
+		}
+		for(loopi=10;loopi<=1000000;loopi++) {
+			test.clear();
+			temp=Integer.toString(loopi);
+			sum=0L;
+			count=0;
+			test.put(new Long(loopi), 1);
+			System.out.println(loopi);
+			while(true) {
+				sum=0L;
+				for(loopj=0;loopj<temp.length();loopj++){
+					sum+=data.get(temp.charAt(loopj)-48);
+				}
+				temp=sum+"";
+				count++;
+				if(test.get(sum)!=null)
+					break;
+			}
+			if(count>=59){
+				System.out.println(loopi);
+				break;
+			}
+				
+		}
+	}
+
+}

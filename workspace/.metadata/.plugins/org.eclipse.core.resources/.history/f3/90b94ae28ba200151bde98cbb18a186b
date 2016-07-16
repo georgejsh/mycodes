@@ -1,0 +1,178 @@
+public class Point {
+	Double x,y,z;
+	boolean D;
+	Point() {
+		x=0.0;
+		y=0.0;
+	}
+	Point(double x,double y) {
+		this.x=x;
+		this.y=y;
+	}
+	//Rotating Point P regarding another point Q
+	Point rotatePoint(Point P,Double angle,Point Q ) {
+		Line L= new Line(P, Q);
+		Double resangle=L.theta()+angle;
+		if(resangle> Math.PI/2) {
+			resangle=Math.PI-resangle;
+		}
+		Double dis = distance(P, Q);
+		return new Point(Q.x+Math.cos(resangle)*dis,Q.y+Math.sin(resangle)*dis);
+	}
+	//distance between points
+	double distance(Point p1,Point p2) {
+		return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y));
+	}
+	//orientation of Points -1 left 1 right 0 colinear
+	Integer ccw(Point p1,Point p2,Point p3){
+		Point vec1,vec2;
+		vec1= new Point(p2.x-p1.x, p2.y-p1.y);
+		vec2= new Point(p3.x-p2.x, p3.y-p2.y);
+		Double res=vec1.x*vec2.y-vec1.y*vec2.x;
+		if(res==0.0)
+			return 0;
+		if(res>0.0)
+			return 1;
+		else 
+			return -1;
+	}
+	
+}
+
+class Line {
+	Double a,b,c;
+	Line() {
+		a=0.0;
+		b=0.0;c=0.0;
+	}
+	Line(Point p1,Point p2) {
+	if(p1.x==p2.x) {
+		b=0.0;
+		a=1.0;
+		c=-p1.x;
+	}
+	else {
+		b=1.0;
+		a=-(p1.y-p2.y)/(p1.x-p2.x);
+		c=-a*p1.x-p1.y;
+		}
+	}
+	double theta(){
+		if(b==0.0)
+			return Math.PI/2;
+		else {
+			Double an= Math.atan(a);
+			if(an<0.0)
+				return an+Math.PI;
+			else 
+				return an;
+		}
+	}
+	//is parallel
+	boolean isparallel(Line L1,Line L2) {
+		if(L1.b==L2.b) {
+			if(L1.a==L2.a)
+				return true;
+			else return false;
+		}
+		else 
+			return false;
+	}
+	//Mirror Image of Point on a line
+	Point findimage(Line L,Point P) {
+		Line perL= perpenLine(L, P);
+		Point inter = intersect(L,perL);
+		Point finalres= (new Point()).rotatePoint(inter, Math.PI, P);
+		return finalres;
+	}
+	//Line Intersect
+	Point intersect(Line L1,Line L2) {
+		if(!isparallel(L1, L2)) {
+			double tempy,tempx= -(L1.c-L2.c)/(L1.a-L2.a);
+			if(L1.b!=0){
+				tempy=-L1.a*tempx-L1.c;
+			}
+			else {
+				tempy=-L2.a*tempx-L2.c;
+			}
+			return new Point(tempx,tempy);
+		}
+		return new Point(-1,-1);
+	}
+	//perpendicular line through P
+	Line perpenLine(Line L,Point P) {
+		Line L2= new Line();
+		L2.b=1.0;
+		L2.a=-1/L.a;
+		L2.c=-L2.a*P.x-P.y;
+		return L2;
+	}
+	//parallel line through P
+	Line parallelLine(Line L,Point P) {
+		Line L2= new Line();
+		L2.b=1.0;
+		L2.a=L.a;
+		L2.c=-L2.a*P.x-P.y;
+		return L2;
+	}
+
+}
+class Circle {
+	Point c;
+	Double r;
+	Circle (Point c,Double r) {
+		this.c=c;
+		this.r=r;
+	}
+	//Circle intersect(area)
+	Point[] intersectpoints(Circle C1,Circle C2) {
+		Line centLine = new Line(C1.c, C2.c);
+		double dis= (new Point()).distance(C1.c, C2.c);
+		if(dis>C1.r+C2.r)
+			return null;
+		if(C1.c.x> C2.c.x){
+			Circle temp=C1;
+			C1=C2;
+			C2=temp;
+		}
+		double angle=(C2.r*C2.r-C1.r*C1.r-dis*dis)/2/dis/C1.r;
+		Point temp1 = new Point(0.0,C1.r);
+		temp1.rotatePoint(temp1, angle+centLine.theta(), C1.c);
+		temp1.x+=C1.c.x;
+		temp1.y+=C1.c.y;
+		Point res[] = new Point[2],temp2 = new Point(0.0,C1.r);
+		temp2.rotatePoint(temp1, centLine.theta()-angle, C1.c);
+		temp2.x+=C1.c.x;
+		temp2.y+=C1.c.y;
+		res[0]=temp1;
+		res[1]=temp2;
+		return res;
+	}
+	//circle line intersection
+	Point[] lineinter(Circle C,Line L) {
+		Point imc= L.findimage(L, C.c);
+		if((new Point()).distance(imc, C.c)>2*C.r)
+			return null;	
+		Point res[] = new Point[2],temp1=new Point(),temp2=new Point();
+		res[0]=temp1;
+		res[1]=temp2;
+		if(L.b==0.0) {
+			temp1.x=temp2.x=L.c;
+			temp1.y=C.c.y+Math.sqrt(C.r*C.r-(L.c-C.c.x)*(L.c-C.c.x));
+			temp2.y=C.c.y-Math.sqrt(C.r*C.r-(L.c-C.c.x)*(L.c-C.c.x));
+		}
+		else {
+			Double temp=L.c+C.c.y;
+			Double quada=L.a*L.a+1,quadb=-2*C.c.x+2*L.a*temp,quadc=C.c.x*C.c.x+temp*temp-C.r*C.r;
+			Double x1=-quadb+Math.sqrt(quadb*quadb-4*quada*quadc)/2/quada;
+			Double x2=-quadb-Math.sqrt(quadb*quadb-4*quada*quadc)/2/quada;
+			temp1=new Point(x1,-L.a*x1-L.c);
+			temp2=new Point(x2,-L.a*x2-L.c);
+		}
+		return res;
+	}
+
+}
+
+//Sphere intersection(volume)
+

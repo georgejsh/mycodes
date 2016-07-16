@@ -1,0 +1,6 @@
+package visitor;
+public class Tacout{
+	public:
+	String Tacopgm;
+	String lasttemp;
+}

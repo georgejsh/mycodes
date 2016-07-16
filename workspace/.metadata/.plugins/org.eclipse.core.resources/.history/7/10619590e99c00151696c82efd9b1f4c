@@ -1,0 +1,17 @@
+package pre1;
+
+import java.util.Collections;
+import java.util.TreeMap;
+import java.util.TreeSet;
+ class TM extends TreeSet<Integer>{
+	
+}
+public class Solution {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		TreeSet<Integer > check = new TreeSet<>();
+		check.
+	}
+
+}

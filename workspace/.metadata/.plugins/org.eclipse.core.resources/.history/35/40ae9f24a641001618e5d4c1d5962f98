@@ -1,0 +1,24 @@
+package euler;
+
+public class p43substdiv {
+	static int a[];
+	public static boolean findnext(){
+		int i=9;
+		while(!set(i)){
+			i--;
+			if(i<0)
+				return false;
+		}
+		return true;
+	}
+	public static boolean set(int i){
+		if(a[i]==9)
+			return false;
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,68 @@
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.Vector;
+
+import javax.print.attribute.standard.Finishings;
+
+
+public class Solution {
+	static Vector<HashSet<Integer>> adjacencyList;
+	
+	public Solution() {
+		// TODO Auto-generated constructor stub
+		adjacencyList=new Vector<HashSet<Integer>>();
+	}
+	public static void findConnectedVertices(HashSet<Integer> connectedVertices,Integer currentVertex ){
+		Integer nextVertex;
+		Iterator<Integer> adjacentVertofcur= adjacencyList.get(currentVertex).iterator();
+		while(adjacentVertofcur.hasNext())
+		{
+			nextVertex=adjacentVertofcur.next();
+			connectedVertices.add(nextVertex);
+			findConnectedVertices( connectedVertices, nextVertex);
+		}
+	}
+	public static int findNumberOfConnectedComp(){
+		Integer currVertex=0;		
+		Integer numberOfConnectedComp=0;
+		HashSet<Integer> traversedVertices = new HashSet<Integer>();
+		while(currVertex<adjacencyList.size())
+		{
+			if(traversedVertices.contains(currVertex))
+				continue;
+			findConnectedVertices(adjacencyList, traversedVertices, currVertex);
+			numberOfConnectedComp++;
+		}
+		return numberOfConnectedComp;
+	}
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input = new Scanner(System.in);
+		HashMap<String, Integer> vertexMap = new HashMap<String, Integer>();
+		String vertexa,vertexb;
+		Integer totalVertex=0;
+
+		while(true)
+		{
+			vertexa=input.next();
+			vertexb=input.next();
+			if(vertexa=="zzz" && vertexb == "zzz")
+				break;
+			if(!vertexMap.containsKey(vertexa))
+				vertexMap.put(vertexa, totalVertex++);
+			if(!vertexMap.containsKey(vertexb))
+				vertexMap.put(vertexb, totalVertex++);
+			adjacencyList.get(vertexMap.get(vertexa)).add(vertexMap.get(vertexb));
+			adjacencyList.get(vertexMap.get(vertexb)).add(vertexMap.get(vertexa));
+		}
+		System.out.println(findNumberOfConnectedComp);
+	}
+
+}

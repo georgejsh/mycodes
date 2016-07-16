@@ -1,0 +1,36 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.Vector;
+
+
+public class Solution {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input = new Scanner(System.in);
+		HashMap<String, Integer> vertexMap = new HashMap<String, Integer>();
+		Vector<Set<Integer>> adjecencyList=new Vector<Set<Integer>>();
+		String vertexa,vertexb;
+		Integer totalVertex=0;
+		while(true)
+		{
+			vertexa=input.next();
+			vertexb=input.next();
+			if(vertexa=="zzz" && vertexb == "zzz")
+				break;
+			if(!vertexMap.containsKey(vertexa))
+				vertexMap.put(vertexa, ++totalVertex);
+			if(!vertexMap.containsKey(vertexb))
+				vertexMap.put(vertexb, ++totalVertex);
+			adjecencyList.get(vertexMap.get(vertexa)).add(vertexMap.get(vertexb));
+			adjecencyList.get(vertexMap.get(vertexb)).add(vertexMap.get(vertexa));
+		}
+		
+	}
+
+}

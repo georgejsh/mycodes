@@ -1,0 +1,11 @@
+package euler;
+
+public class p28spiral {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int j=0,i,l,k;
+		
+	}
+
+}

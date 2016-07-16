@@ -1,0 +1,46 @@
+package euler;
+
+import java.util.HashSet;
+
+public class pandigital32 {
+	public static boolean check(int i,int j,int k){
+		int a[]= new int[10];
+		while(i>0){
+			a[i%10]++;
+			i/=10;
+		}
+		while(j>0){
+			a[j%10]++;
+			j/=10;
+		}
+		while(k>0){
+			a[k%10]++;
+			k/=10;
+		}
+		if(a[0]>0)
+			return false;
+		for(i=1;i<10;i++)
+			if(a[i]!=1)
+				return false;
+		return true;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int i,j;
+		long sum=0,r;
+		HashSet<Integer> st= new HashSet<>();
+		for(i=0;i<1000000000;i++)
+			for(j=0;j<1000000000;j++){
+				r=i*j;
+				if(>999999999)
+					break;
+				if(check(i,j,i*j))
+					if(!st.contains(i*j)){
+						System.out.println(i*j);sum+=i*j;
+						st.add(i*j);
+					}
+			}
+		System.out.println(sum);
+	}
+
+}

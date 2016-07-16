@@ -1,0 +1,17 @@
+package euler;
+
+public class p43substdiv {
+	static int a[];
+	public static boolean findnext(){
+		int i=9;
+		while(!set(i){
+			i--;
+		}
+		return false;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

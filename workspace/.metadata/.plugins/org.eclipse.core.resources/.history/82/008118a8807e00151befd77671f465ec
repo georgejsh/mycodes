@@ -1,0 +1,54 @@
+package euler;
+
+import java.util.ArrayList;
+
+public class Primediv {
+
+	static ArrayList<Integer> prime= new ArrayList<Integer>();
+	static ArrayList<Integer> lowprime =new ArrayList<Integer>();
+	static ArrayList<Integer> powerofprime = new ArrayList<Integer>();
+	static ArrayList<Integer> remaining = new ArrayList<Integer>();
+	public static Integer size=1000000;
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Integer loopi,loopj;
+		Long sum=0L;
+		for(loopi=0;loopi<=size;loopi++){
+			prime.add(0);
+			lowprime.add(0);
+			powerofprime.add(0);
+			remaining.add(0);
+		}
+		for(loopi=2;loopi<=size;loopi++) {
+			if(prime.get(loopi)!=0)
+				continue;
+			//System.out.println(loopi);
+			lowprime.set(loopi, loopi);
+			powerofprime.set(loopi,1);
+			remaining.set(loopi,1);
+			for(loopj=2;loopj*loopi<=size;loopj++){
+				if(prime.get(loopj*loopi)!=0)
+					continue;	
+				prime.set(loopj*loopi,1);
+				lowprime.set(loopj*loopi, loopi);
+			}
+		}
+		for(loopi=2;loopi<=size;loopi++) {
+			if(prime.get(loopi)==0)
+				continue;
+			if(lowprime.get(loopi)==lowprime.get(loopi/lowprime.get(loopi))) {
+				powerofprime.set(loopi,powerofprime.get(loopi/lowprime.get(loopi))+1);
+				remaining.set(loopi,remaining.get(loopi/lowprime.get(loopi)));
+			}
+			else{
+				powerofprime.set(loopi,1);
+				remaining.set(loopi,loopi/lowprime.get(loopi));
+			}
+		}
+		for(loopi=0;loopi<=size;loopi++){
+			System.out.print(prime.get(loopi)+",");
+		}
+	}
+
+}

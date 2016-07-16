@@ -1,0 +1,18 @@
+package euler;
+
+public class p24permute {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int i;
+		int  a[]= new int[11];
+		a[1]=1;
+		for(i=2;i<11;i++)
+				a[i]=a[i-1]*i;
+		int j=1000000;
+		while(j>0){
+			
+		}
+	}
+
+}

@@ -1,0 +1,17 @@
+package euler;
+
+public class pandigital32 {
+	public static boolean check(int i,int j,int k){
+		int a[]= new int[10];
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int i,j;
+		for(i=0;i<1000;i++)
+			for(j=0;j<1000;j++){
+				
+			}
+	}
+
+}

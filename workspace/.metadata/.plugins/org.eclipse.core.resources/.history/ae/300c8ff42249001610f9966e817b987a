@@ -1,0 +1,19 @@
+package euler;
+
+import java.util.ArrayList;
+
+public class p48primeap {
+	static ArrayList<Integer> prime= new ArrayList<Integer>();
+	public static Integer size=10000;
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int i,j,k,l;
+		for(i=1000;i<10000;i++){
+			for(j=1;j<9999;j++){
+				
+			}
+		}
+	}
+
+}

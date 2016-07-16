@@ -1,0 +1,13 @@
+package euler;
+
+import java.util.Scanner;
+import java.util.Vector;
+
+public class p22names {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 
+	}
+
+}

@@ -1,0 +1,18 @@
+package euler;
+
+import java.util.ArrayList;
+
+public class p45tripenhex {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int i,j;
+		ArrayList<Integer> a = new ArrayList<>();
+		//a.add(0);
+		for(i=1;i<20001;i++){
+			a.add(0);
+			a.set(i-1, (i*(3*i-1))/2);
+		}
+	}
+
+}

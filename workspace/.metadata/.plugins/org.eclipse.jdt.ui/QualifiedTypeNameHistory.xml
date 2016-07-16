@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="ComplexNumber"/>
+<fullyQualifiedTypeName name="Solution"/>
+<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+<fullyQualifiedTypeName name="java.lang.Long"/>
+<fullyQualifiedTypeName name="org.ejml.simple.SimpleMatrix"/>
+<fullyQualifiedTypeName name="org.ejml.interfaces.decomposition.EigenDecomposition"/>
+<fullyQualifiedTypeName name="org.ejml.factory.DecompositionFactory"/>
+<fullyQualifiedTypeName name="org.ejml.data.DenseMatrix64F"/>
+<fullyQualifiedTypeName name="org.ejml.data.DenseMatrix32F"/>
+<fullyQualifiedTypeName name="org.la4j.matrix.SparseMatrix"/>
+<fullyQualifiedTypeName name="org.la4j.decomposition.EigenDecompositor"/>
+<fullyQualifiedTypeName name="org.la4j.Vector"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.lang.Comparable"/>
+<fullyQualifiedTypeName name="RankNode"/>
+<fullyQualifiedTypeName name="skiplist.Node"/>
+<fullyQualifiedTypeName name="org.la4j.Matrices"/>
+<fullyQualifiedTypeName name="org.la4j.Matrix"/>
+<fullyQualifiedTypeName name="org.la4j.matrix.sparse.CCSMatrix"/>
+<fullyQualifiedTypeName name="java.math.BigDecimal"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.lang.Boolean"/>
+<fullyQualifiedTypeName name="symbolattr"/>
+<fullyQualifiedTypeName name="Tacout"/>
+<fullyQualifiedTypeName name="Tempgen"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.BitSet"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="gui.Utils"/>
+<fullyQualifiedTypeName name="java.util.Vector"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="euler.integerrighttri39"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="java.math.BigInteger"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+</qualifiedTypeNameHistroy>

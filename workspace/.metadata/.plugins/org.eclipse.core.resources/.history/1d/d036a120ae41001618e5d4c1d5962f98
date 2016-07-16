@@ -1,0 +1,22 @@
+package euler;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class p44pentnum {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int i,j;
+		ArrayList<Integer> a = new ArrayList<>();
+		for(i=1;i<200;i++){
+			a.set(i, (i*(3*i-1))/2);
+		}
+		Collections.binarySearch(a, 10);
+		for(i=0;i<200;i++)
+			for(j=i+1;j<200;j++){
+				
+			}
+	}
+
+}

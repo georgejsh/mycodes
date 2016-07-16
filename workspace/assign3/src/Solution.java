@@ -1,0 +1,105 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.Vector;
+
+
+public class Solution {
+	static HashMap<String,HashSet<String>> adjacencyList;
+	
+	public static void findConnectedVertices(HashSet<String> connectedVertices,String currentVertex ){
+		String nextVertex;
+		Iterator<String> adjacentVertofcur= adjacencyList.get(currentVertex).iterator();
+		while(adjacentVertofcur.hasNext())
+		{
+			nextVertex=adjacentVertofcur.next();
+			if(connectedVertices.contains(nextVertex))
+				continue;
+			connectedVertices.add(nextVertex);			
+			findConnectedVertices( connectedVertices, nextVertex);
+		}
+	}
+	public static void findNumber(){
+		Iterator<String> vertexList=adjacencyList.keySet().iterator(),connectedList;		
+		Integer numberOfConnectedComp=0,noOfTriangles=0;
+		HashSet<String> traversedVertices = new HashSet<String>();
+		String currVertex = null;
+		while(vertexList.hasNext())
+		{
+			HashSet<String> connectVertices = new HashSet<String>();
+			currVertex=vertexList.next();
+			if(traversedVertices.contains(currVertex))
+				continue;
+			//System.out.print(currVertex);
+			findConnectedVertices( connectVertices, currVertex);
+			for(connectedList=connectVertices.iterator();connectedList.hasNext();)
+			{
+				String currVer=connectedList.next();
+				HashSet<String> traversedVert= new HashSet<String>();
+				traversedVert.add(currVer);
+				//System.out.println("SF"+currVer);
+				noOfTriangles+=findTrianglesAtVertex(currVer,currVer,traversedVert,  0);
+			}
+			traversedVertices.addAll(connectVertices);
+			numberOfConnectedComp++;
+		}
+		System.out.println(numberOfConnectedComp);
+		System.out.println(noOfTriangles/6);
+		//return numberOfConnectedComp;
+	}
+	/**
+	 * @param args
+	 */
+	public static Integer findTrianglesAtVertex(String parVertex,String currVertex,HashSet<String> traversedVertices,Integer depth) {
+		String nextVertex;
+		if(depth>2)
+			return 0;
+		Integer triangleCount=0;
+		//System.out.println("S"+currVertex);
+		Iterator<String> adjacentVertofcur= adjacencyList.get(currVertex).iterator();
+		while(adjacentVertofcur.hasNext())
+		{
+			
+			nextVertex=adjacentVertofcur.next();
+			//System.out.println(parVertex+"h"+nextVertex);
+			if(nextVertex.equals(parVertex)&& depth==2)
+				triangleCount++;
+			if(traversedVertices.contains(nextVertex) )
+				continue;
+			traversedVertices.add(nextVertex);
+			triangleCount+= findTrianglesAtVertex( parVertex,nextVertex,traversedVertices,depth+1);
+			traversedVertices.remove(nextVertex);
+		}
+		//System.out.println("T"+triangleCount);
+		return triangleCount;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		adjacencyList=new HashMap<String, HashSet<String>>();
+		Scanner input = new Scanner(System.in);
+		//HashMap<String, Integer> vertexMap = new HashMap<String, Integer>();
+		String vertexa,vertexb;
+
+		while(true)
+		{
+			vertexa=input.next();
+			vertexb=input.next();
+			//System.out.println(vertexa+"test"+vertexb);
+			if(vertexa.equals("zzz") && vertexb .equals("zzz"))
+				break;
+			if(!adjacencyList.containsKey(vertexa)){
+				adjacencyList.put(vertexa,new HashSet<String>());
+			}
+			if(!adjacencyList.containsKey(vertexb)){
+				adjacencyList.put(vertexb,new HashSet<String>());
+			}
+			adjacencyList.get(vertexa).add(vertexb);
+			adjacencyList.get(vertexb).add(vertexa);
+		}
+		findNumber();
+	}
+
+}

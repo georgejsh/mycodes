@@ -1,0 +1,52 @@
+class Line {
+	Double a,b,c,d;
+	boolean D;
+	Line(Point p1,Point p2) {
+	if(!D) {
+		if(p1.x==p2.x) {
+			b=0.0;
+			a=1.0;
+			c=-p1.x;
+		}
+		else {
+			b=1.0;
+			a=-(p1.y-p2.y)/(p1.x-p2.x);
+			c=-a*p1.x-p1.y;
+			}
+		}
+	}
+}
+class Circle {
+	Point c;
+	Double r;
+	Circle (Point c,Double r) {
+		this.c=c;
+		this.r=r;
+	}
+}
+//Mirror Image of Point
+//Line Intersect
+//perpendicular line through P
+//parallel line through P
+//orientation of Points
+//Circle intersect(area)
+//Sphere intersection(volume)
+//circle line intersection
+
+public class Point {
+	Double x,y,z;
+	boolean D;
+	Point() {
+		x=0.0;
+		y=0.0;
+	}
+	Point(double x,double y) {
+		this.x=x;
+		this.y=y;
+	}
+	Point(double x,double y,double z) {
+		this.x=x;
+		this.y=y;
+		this.z=z;
+	}
+}

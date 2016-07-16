@@ -1,0 +1,42 @@
+package euler;
+
+public class p43substdiv {
+	static int a[];
+	public static boolean findnext(){
+		int i=9;
+		while(!set(i)){
+			i--;
+			if(i<0)
+				return false;
+		}
+		return true;
+	}
+	public static boolean set(int i){
+		int b[]=new int[10];
+		int j;
+		for(j=0;j<i;j++)
+			b[a[i]]++;
+		for(j=a[i]+1;j<=9;j++)
+			if(b[j]==0){
+				a[i]=j;
+				b[j]++;
+			}
+		if(j>9)
+			return false;
+		for(j=0;j<=9;j++)
+			if(b[j]==0){
+				a[i++]=j;
+				b[j]++;
+			}
+		return true;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		while(!findnext()){
+			for(i=0;i<10;i++)
+				System.out.print(a[i]+" ");
+				System.out.println();
+		}
+	}
+
+}

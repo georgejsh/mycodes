@@ -1,0 +1,14 @@
+package euler;
+
+public class p44pentnum {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int i;
+		int a[]=new int[200];
+		for(i=1;i<200;i++){
+			
+		}
+	}
+
+}

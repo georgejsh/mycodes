@@ -1,0 +1,243 @@
+package virus;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+class BTNode
+{
+   BTNode left, right;
+   int data;
+
+   /* Constructor */
+   public BTNode()
+   {
+      left = null;
+      right = null;
+      data = 0;
+   }
+
+   /* Constructor */
+   public BTNode(int n)
+   {
+      left = null;
+      right = null;
+      data = n;
+   }
+
+   /* Function to set left node */
+   public void setLeft(BTNode n)
+   {
+      left = n;
+   }
+
+   /* Function to set right node */
+   public void setRight(BTNode n)
+   {
+      right = n;
+   }
+
+   /* Function to get left node */
+   public BTNode getLeft()
+   {
+      return left;
+   }
+
+   /* Function to get right node */
+   public BTNode getRight()
+   {
+      return right;
+   }
+
+   /* Function to set data to node */
+   public void setData(int d)
+   {
+      data = d;
+   }
+
+   /* Function to get data from node */
+   public int getData()
+   {
+      return data;
+   }
+}
+
+/* Class BT */
+class BT
+{
+   private BTNode root;
+
+   /* Constructor */
+   public BT()
+   {
+      root = null;
+   }
+
+   public void setRoot(int data)
+   {
+      root = new BTNode(data);
+   }
+
+   public BTNode getRoot()
+   {
+      return root;
+   }
+
+   /* Function to check if tree is empty */
+   public boolean isEmpty()
+   {
+      return root == null;
+   }
+
+   BTNode search(BTNode node, int val)
+   {
+      if (node.data == val)
+         return node;
+      if (node.getLeft() != null)
+      {
+         BTNode newnode = search(node.getLeft(), val);
+         if (newnode != null)
+            return newnode;
+      }
+      if (node.getRight() != null)
+      {
+         BTNode newnode = search(node.getRight(), val);
+         if (newnode != null)
+            return newnode;
+      }
+      return null;
+
+   }
+
+   public void insert(int data, int left, int right)
+   {
+
+      if (data == 1)
+      {
+         BTNode node = new BTNode(data);
+         if (left == -1)
+         {
+            node.setLeft(null);
+         }
+         else
+         {
+            BTNode nodeleft = new BTNode(left);
+            node.setLeft(nodeleft);
+
+         }
+         if (right == -1)
+         {
+            node.setRight(null);
+         }
+         else
+         {
+            BTNode noderight = new BTNode(right);
+            node.setRight(noderight);
+
+         }
+         root = node;
+      }
+      else
+      {
+         BTNode node = search(root, data);
+         if (left == -1)
+         {
+            node.setLeft(null);
+         }
+         else
+         {
+            BTNode nodeleft = new BTNode(left);
+            node.setLeft(nodeleft);
+
+         }
+         if (right == -1)
+         {
+            node.setRight(null);
+         }
+         else
+         {
+            BTNode noderight = new BTNode(right);
+            node.setRight(noderight);
+
+         }
+
+      }
+
+   }
+
+    //function to calculate maximum width
+   
+}
+
+public class Solution
+{
+	public static boolean search(BTNode virus,BTNode blood) {
+		boolean result=false;
+		if(virus==null)
+			return false;
+		result|=searchatN(virus, blood);
+		if(blood.getLeft()!=null)
+		{	result|=search(virus,blood.getLeft());
+			if(result)
+				return result;
+		}
+		if(blood.getRight()!=null) {
+			result|=search(virus,blood.getRight());
+			if(result)
+				return result;
+		}
+		return result;
+	}
+	public static boolean searchatN(BTNode virus,BTNode curr) {
+		if(curr==null)
+			return false;
+		if(virus==null)
+			return true;
+//		if(curr.getData()!=virus.getData())
+//			return false;
+		boolean result=true;
+		if(virus.getLeft()!=null) {
+			result&=searchatN(virus.getLeft(), curr.getLeft());
+		}
+		if(virus.getRight()!=null) {
+			result&=searchatN(virus.getRight(), curr.getRight());
+		}
+		return result;
+	}
+   public static void main(String args[])
+   {
+      Scanner sc = new Scanner(System.in);
+      int n;
+      //n = sc.nextInt();
+      BT vbintree = new BT();
+      for (int i = 0; ; i++)
+      {
+         int d, l, r;
+         try {
+        	 d = sc.nextInt();
+         }catch(InputMismatchException e){
+        	 sc.next();
+        	 break;
+         }
+         l = sc.nextInt();
+         r = sc.nextInt();
+         vbintree.insert(d, l, r);
+      }
+      BT bloodbintree = new BT();
+      for (int i = 0; ; i++)
+      {
+         int d, l, r;
+         try {
+        	 d = sc.nextInt();
+         }catch(InputMismatchException e){
+        	 break;
+         }
+         l = sc.nextInt();
+         r = sc.nextInt();
+         bloodbintree.insert(d, l, r);
+      }
+      
+     if(search(vbintree.getRoot(),bloodbintree.getRoot()))
+    	 System.out.println("Yes");
+     else
+    	 System.out.println("No");
+   }
+}

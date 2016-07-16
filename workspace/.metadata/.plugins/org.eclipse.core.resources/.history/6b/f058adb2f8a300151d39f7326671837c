@@ -1,0 +1,197 @@
+package Qtree2;
+import java.util.Scanner;
+import java.util.Vector;
+class Node {
+	Node left;
+	Node right;
+	Integer rvalue;
+	Integer lvalue;
+	Integer index;
+	Boolean color;
+	Node() {
+		left=null;
+		right=null;
+		rvalue=lvalue=0;
+		index=0;
+	}
+}
+class HLD {
+	static int V = 100000;
+	static Vector<Vector<Node>> segtree = new Vector<>();     // segtrees
+	static Vector<Vector<Integer>> adj = new Vector<>();     // adjacency list
+	static int parent[]=new int[V], heavy[] =new int[V];
+	static int depth[]=new int[V], size[]=new int[V];  
+	static int chain[]=new int[V], head[]=new int[V]; 
+	static int chainid[]=new int[V], chainlength[]=new int[V];
+	static boolean color[]=new boolean[V];
+	static Vector<Boolean> colorids = new Vector<>();
+    
+	static void DFS(int i)
+	{
+	    size[i] = 1;
+	    for (int k=0; k<adj.get(i).size(); ++k)
+	    {
+	        int j = adj.get(i).get(k);
+	        if (j == parent[i]) continue;
+	 
+	        parent[j] = i;
+	        depth[j] = depth[i] + 1;
+	 
+	        DFS(j);
+	 
+	        size[i] += size[j];
+	        if (heavy[i] == -1 || size[j] > size[heavy[i]]) 
+	            heavy[i] = j;
+	    }
+	}
+	static void makesegtree(Vector<Node> segt,int index,int start,int end) {
+		 if(start==end){
+			 //if(colorids.get(start)==true)
+			//	 segt.get(index).value=start;
+			 //else
+			//	 segt.get(index).value=Integer.MAX_VALUE;
+			 segt.get(index).color=colorids.get(start);
+		 }
+		 else {
+			 segt.get(index).left=new Node();
+			 segt.get(index).right=new Node();
+			 segt.add(segt.get(index).left);
+			 segt.get(index).left.index=index+1;
+			 makesegtree(segt, index+1, start, (start+end)/2);
+			 segt.add(segt.get(index).right);
+			 segt.get(index).right.index=segt.size()-1;
+			 makesegtree(segt, segt.size()-1, (start+end)/2+1,end);
+			// segt.get(index).value=Math.min(segt.get(index).right.value, segt.get(index).left.value);
+		 }
+	 }
+	static Integer searchtreer(Vector<Node> segt,int index,int start,int end,int qs,int qe) {
+		if(start>qe || end>qs) 
+			return Integer.MAX_VALUE;
+		int mid=(start+end)/2;
+		if(start==qs && end==qe)
+			return segt.get(index).rvalue;
+		Integer rindex=searchtreer(segt, segt.get(index).right.index, mid+1, end, qs, qe);
+		if(rindex!=Integer.MAX_VALUE)
+			return rindex;
+		return 	searchtreer(segt, segt.get(index).left.index, start, mid, qs, qe);
+	}
+	static Integer searchtreel(Vector<Node> segt,int index,int start,int end,int qs,int qe) {
+		if(start>qe || end>qs) 
+			return Integer.MAX_VALUE;
+		int mid=(start+end)/2;
+		if(start==qs && end==qe)
+			return segt.get(index).lvalue;
+		Integer lindex=searchtreer(segt, segt.get(index).left.index, start, mid, qs, qe);
+		if(lindex!=Integer.MAX_VALUE)
+			return lindex;
+		return 	searchtreel(segt, segt.get(index).right.index, mid+1, end, qs, qe);
+	}
+	static void update(Vector<Node> segt,int index,int start,int end,int q) {
+		if(!(start<=q && q<=end)) 
+			return ;
+		int mid=(start+end)/2;
+		if(start==q && end==q)
+		{
+			segt.get(index).color=!segt.get(index).color;
+			 if(segt.get(index).color==true) {
+				 segt.get(index).rvalue=start;
+				 segt.get(index).lvalue=start;
+			 }
+			 else {
+				 segt.get(index).rvalue=Integer.MAX_VALUE;
+				 segt.get(index).lvalue=Integer.MAX_VALUE;
+			 }
+			return ;
+		}
+		update(segt, segt.get(index).right.index, mid+1, end, q);
+		update(segt, segt.get(index).left.index, start, mid, q);
+		Integer rindex=segt.get(index).right.rvalue;
+		if(rindex!=Integer.MAX_VALUE)
+			segt.get(index).rvalue= rindex;
+		else
+			segt.get(index).rvalue=segt.get(index).left.lvalue;
+		Integer lindex=segt.get(index).left.lvalue;
+		if(lindex!=Integer.MAX_VALUE)
+			segt.get(index).lvalue= lindex;
+		else
+			segt.get(index).lvalue=segt.get(index).right.lvalue;
+	}
+	static void heavylight_DFS(int N)
+	{
+	    //memset(heavy, -1, sizeof(heavy));
+	 
+	    parent[0] = -1;
+	    depth[0] = 0;
+	    DFS(0);
+	 
+	    int c = 0;  
+	    for (int i=0; i<N; ++i)
+	        if (parent[i] == -1 || heavy[parent[i]] != i)
+	        {
+	        	int len=0;
+	        	colorids.clear();
+	            for (int k = i; k != -1; k = heavy[k])
+	                {
+	            		colorids.add(color[k]);
+	            		chain[k] = c;
+	            		head[k] = i;
+	            		chainid[k]=len;
+	            		len++;
+	                }
+	            chainlength[i]=len;
+	            Vector<Node> currseg =  new Vector<>();
+	            currseg.add(new Node());
+	            makesegtree(currseg,0,0,len);	            
+	            c++;
+	        }
+	}
+	static int lca(int i, int j)
+	{
+	    while (chain[i] != chain[j])
+	        if (depth[head[i]] > depth[head[j]])
+	            i = parent[head[i]];
+	        else
+	            j = parent[head[j]];
+	 
+	    return depth[i] < depth[j] ? i : j;
+	}
+	 static int search(int i,int j,int k) {
+		 
+	 }
+}
+
+public class Solution {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Integer n,q = 0,loopi,loopj,a,b;
+		Scanner input = new Scanner(System.in);
+		//HLD data= new HLD();
+		n=input.nextInt();
+		for(loopi=0;loopi<n-1;loopi++){
+			HLD.adj.add(new Vector<Integer>());
+			HLD.color[loopi]=false;
+		}
+		for(loopi=0;loopi<n-1;loopi++){
+			a=input.nextInt();
+			b=input.nextInt();
+			HLD.adj.get(a-1).add(b-1);
+		}
+		HLD.DFS(0);
+		HLD.heavylight_DFS(0);
+		//data.
+		for(loopi=0;loopi<q;loopi++){
+			a=input.nextInt();
+			b=input.nextInt();
+			if(a==0)
+				HLD.update(HLD.segtree.get(HLD.chain[b-1]), 0, 0, HLD.chainlength[HLD.chain[b-1]], b-1);
+			else
+			{
+				Integer lc=HLD.lca(0, b-1);
+				Integer fid=HLD.search(0,lc,b-1);
+				System.out.println(fid);
+			}
+		}
+	}
+
+}
