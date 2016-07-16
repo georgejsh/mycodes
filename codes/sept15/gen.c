@@ -1,0 +1,12 @@
+#include<stdio.h>
+int main()
+{
+int i,j;
+ printf("500000\n");
+for(j=0;j<500000;j++)
+{
+printf("1\n");
+for(i=0;i<1;i++)
+printf("%d %d\n",0,i);
+}
+}

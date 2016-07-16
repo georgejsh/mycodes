@@ -1,0 +1,15 @@
+#include<stdio.h>
+int main()
+{
+	int t;
+	double m,p,res;
+	for(scanf("%d",&t);t;t--)
+	{
+		scanf("%lf%lf",&m,&p);
+		if(p<0.5)
+			res=.5;
+		else
+			res=(1-pow(-p,m))/(1+p);
+		printf("%lf %lf\n",res,1-res);
+	}
+}

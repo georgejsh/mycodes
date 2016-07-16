@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<math.h>
+int main()
+{	
+	int n,t,i,j,countleft,countsplit,m,z;	
+	int a[100001],ai,sum;
+	for(scanf("%d",&t);t;t--)
+	{
+		for(i=0;i<100001;i++)
+			a[i]=0;
+		countleft=countsplit=0;
+		for(scanf("%d%d",&n,&m),i=0;i<m;i++)
+		{
+			scanf("%d",&z);
+			a[z]++;
+		}	
+		countleft=m-1;	
+		for(i=1;i<100001;)
+		{
+			if(a[i]==0)
+			{
+				i++;
+				continue;
+			}
+			//printf("%d %d %d %d\n",countsplit,countleft,a[i],i);
+			if(i>=countleft)
+			{
+				countsplit+=countleft;
+				break;
+			}
+			else
+			{
+				countsplit+=i;
+				countleft-=i+1;
+				a[i]--;
+			}
+			if(countleft==0)
+ 			 break;
+		}
+		printf("%d\n",countsplit);
+	}
+	return 0;
+}
